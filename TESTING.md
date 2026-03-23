@@ -31,7 +31,21 @@ python ../models/convert-wav2vec2-to-ggml.py \
 python ../models/convert-wav2vec2bert-to-ggml.py \
     ~/Wav2Vec2BertForCTC-hsb/ \
     ../models/Korla-Wav2Vec2BertForCTC-hsb
-
-    
-    
 ```
+
+## Building the software
+
+```code
+cd wav2vec2.cpp/
+rm -rf build && mkdir build && pushd build && cmake ../ && make -j && popd
+```
+
+## Test qunatization
+
+```code
+./build/bin/quantize-wav2vec2 ./models/Korla-omniASR_W2V_300M_hsb/ggml-model-f16.bin models/Korla-omniASR_W2V_300M_hsb/ggml-model-q6_k.bin q6_k
+
+./build/bin/quantize-wav2vec2-bert ./models/Korla-Wav2Vec2BertForCTC-hsb/ggml-model-f16.bin models/Korla-Wav2Vec2BertForCTC-hsb/ggml-model-q4_k.bin q4_k
+
+```
+
