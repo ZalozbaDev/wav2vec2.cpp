@@ -46,6 +46,26 @@ rm -rf build && mkdir build && pushd build && cmake ../ && make -j && popd
 ./build/bin/quantize-wav2vec2 ./models/Korla-omniASR_W2V_300M_hsb/ggml-model-f16.bin models/Korla-omniASR_W2V_300M_hsb/ggml-model-q6_k.bin q6_k
 
 ./build/bin/quantize-wav2vec2-bert ./models/Korla-Wav2Vec2BertForCTC-hsb/ggml-model-f16.bin models/Korla-Wav2Vec2BertForCTC-hsb/ggml-model-q4_k.bin q4_k
-
 ```
 
+## Test inference
+
+### non-quantized
+
+```code
+./build/bin/wav2vec2-cli -m ./models/Korla-omniASR_W2V_300M_hsb/ggml-model-f16.bin ~/docker_vosk/common/cmdline/testdata/0001_citanje.wav
+
+./build/bin/wav2vec2-bert-cli -m ./models/Korla-Wav2Vec2BertForCTC-hsb/ggml-model-f16.bin ~/docker_vosk/common/cmdline/testdata/0001_citanje.wav
+```
+
+### quantized
+
+```code
+./build/bin/wav2vec2-cli -m ./models/Korla-omniASR_W2V_300M_hsb/ggml-model-q6_k.bin ~/docker_vosk/common/cmdline/testdata/0001_citanje.wav
+
+./build/bin/wav2vec2-bert-cli -m ./models/Korla-Wav2Vec2BertForCTC-hsb/ggml-model-q4_k.bin ~/docker_vosk/common/cmdline/testdata/0001_citanje.wav
+```
+
+## Not tested scenarios
+
+* Metal backend
